@@ -2,16 +2,27 @@
 
 #include "seesaw.hpp"
 
-enum KeyEdge {
-    HIGH = 0,
-    LOW,
-    FALLING,
-    RISING
-};
-
-typedef void(* keypad_callback_t) (uint8_t key, KeyEdge edge);
-
 class Keypad {
+    public:
+
+        enum class Edge : uint8_t {
+            HIGH = 0,
+            LOW,
+            FALLING,
+            RISING
+        };
+        typedef void(* keypad_callback_t) (uint8_t key, Edge edge);
+
+        Keypad(Seesaw& seesaw);
+
+        void init();
+        void update();
+
+        uint8_t* events(uint8_t& count);
+
+        void set_callback(keypad_callback_t callback);
+        void clear_callback(void);
+
     private:
 
         static const int MODULE_BASE = 0x10;
@@ -36,16 +47,4 @@ class Keypad {
             return (key % 8) + (key / 8) * 4;
         };
 
-    public:
-
-        Keypad(Seesaw& seesaw);
-
-        void init();
-        void update();
-
-        uint8_t* events(uint8_t& count);
-
-        void set_callback(keypad_callback_t callback);
-        void clear_callback(void);
-        
 };

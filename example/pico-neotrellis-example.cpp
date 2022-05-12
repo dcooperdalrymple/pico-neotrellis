@@ -6,7 +6,7 @@
 #define PICO_SCL 5
 
 static NeoTrellis trellis(PICO_I2C, PICO_SDA, PICO_SCL);
-void keypad_handler(uint8_t key, KeyEdge edge);
+void keypad_handler(uint8_t key, Keypad::Edge edge);
 
 int main() {
     stdio_init_all();
@@ -38,8 +38,8 @@ int main() {
     return 0;
 }
 
-void keypad_handler(uint8_t key, KeyEdge edge) {
-    if (edge == KeyEdge::RISING) {
+void keypad_handler(uint8_t key, Keypad::Edge edge) {
+    if (edge == Keypad::Edge::RISING) {
         trellis.pixels.set(key, COLOR_WHITE);
     } else {
         trellis.pixels.set(key, COLOR_BLACK);

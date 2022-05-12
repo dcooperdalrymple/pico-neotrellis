@@ -17,7 +17,7 @@ void Keypad::init() {
     for (uint8_t i = 0; i < 16; ++i) {
         uint8_t key = key_trellis_to_seesaw(i);
 
-        uint8_t activate_rising[] = {key, (1 << (RISING + 1)) | 1};
+        uint8_t activate_rising[] = {key, (1 << (static_cast<int>(Edge::RISING) + 1)) | 1};
 
         seesaw.write(
             MODULE_BASE,
@@ -26,7 +26,7 @@ void Keypad::init() {
             2
         );
 
-        uint8_t activate_falling[] = {key, (1 << (FALLING + 1)) | 1};
+        uint8_t activate_falling[] = {key, (1 << (static_cast<int>(Edge::FALLING) + 1)) | 1};
 
         seesaw.write(
             MODULE_BASE,
@@ -73,7 +73,7 @@ uint8_t* Keypad::events(uint8_t& count) {
         key = key_seesaw_to_trellis(key);
         events[i] &= 0x03;
         events[i] |= (key << 2);
-        if (cb) cb(key, static_cast<KeyEdge>(events[i] & 0x03));
+        if (cb) cb(key, static_cast<Edge>(events[i] & 0x03));
     }
 
     return events;

@@ -69,11 +69,11 @@ trellis.pixels.show();
 Keypad events can be accessed manually and handled in bulk, but a simple callback is provided to handle each event in sequential order.
 
 ````
-void keypad_handler(uint8_t key, KeyEdge edge) {
+void keypad_handler(uint8_t key, Keypad::Edge edge) {
     switch (edge) {
-        case KeyEdge::RISING:
+        case Keypad::Edge::RISING:
             break;
-        case KeyEdge::FALLING:
+        case Keypad::Edge::FALLING:
             break;
     }
 }
